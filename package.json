@@ -1,0 +1,39 @@
+{
+  "name": "blocipedia",
+  "version": "1.0.0",
+  "description": "An application that allows users to create, collaborate, and share wikis",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "cross-env NODE_ENV=test node ./node_modules/jasmine/bin/jasmine.js",
+    "start": "node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariel33/blocipedia-node.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mariel33/blocipedia-node/issues"
+  },
+  "homepage": "https://github.com/mariel33/blocipedia-node#readme",
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "jasmine": "^3.0.0",
+    "request": "^2.83.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "dotenv": "^5.0.0",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "express-flash": "0.0.2",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.0.2",
+    "morgan": "^1.9.0",
+    "pg": "^7.4.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.32.6",
+    "sequelize-cli": "^4.0.0"
+  }
+}
