@@ -19,6 +19,7 @@
   "homepage": "https://github.com/mariel33/blocipedia-node#readme",
   "devDependencies": {
     "cross-env": "^5.2.0",
+    "faker": "^4.1.0",
     "jasmine": "^3.0.0",
     "request": "^2.83.0"
   },

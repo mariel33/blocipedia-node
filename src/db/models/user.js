@@ -3,15 +3,15 @@ module.exports = (sequelize, DataTypes) => {
   var User = sequelize.define('User', {
     username: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isEmail: { msg: "must be a valid email" }
+        isEmail: {msg: "must be a valid email"}
       }
-    },
+      },
     password: {
       type: DataTypes.STRING,
       allowNull: false
@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   User.associate = function(models) {
     // associations can be defined here
+    User.hasMany(models.Wiki, {
+      foreignKey: "userId",
+      as: "wikis"
+    })
   };
   return User;
 };
