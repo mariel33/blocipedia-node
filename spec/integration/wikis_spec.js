@@ -15,11 +15,18 @@ describe("routes : wikis", () => {
             User.create({
                 username: "starman",
                 email: "starman@tesla.com",
-                password: "Trekkie4lyfe"
+                password: "Trekkie4lyfe",
+                role: "standard"
             })
                 .then((user) => {
-                    this.user = user;
-
+                    request.get({
+                        url: "http://localhost:3000/auth/fake",
+                        form: {
+                            role: user.role,
+                            userId: user.id,
+                            email:user.email
+                        }
+                    });
                     Wiki.create({
                         title: "Wikis 101",
                         body: "Learning to create wikis",

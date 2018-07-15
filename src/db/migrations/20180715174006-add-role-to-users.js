@@ -10,19 +10,14 @@ module.exports = {
       return queryInterface.createTable('users', { id: Sequelize.INTEGER });
     */
    return queryInterface.addColumn(
-     "Wikis",
-     "userId",
+     "Users",
+     "role",
      {
-       type: Sequelize.INTEGER,
-       onDelete: "CASCADE",
+       type: Sequelize.STRING,
        allowNull: false,
-       references: {
-         model: "Users",
-         key: "id",
-         as: "userId"
-       },
+       defaultValue: "standard"
      }
-   );
+   )
   },
 
   down: (queryInterface, Sequelize) => {
@@ -33,6 +28,6 @@ module.exports = {
       Example:
       return queryInterface.dropTable('users');
     */
-   return queryInterface.removeColumn("Wikis", "userId");
+   return queryInterface.removeColumn("Users", "role");
   }
 };
