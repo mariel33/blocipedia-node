@@ -27,6 +27,7 @@ describe("routes : wikis", () => {
                             email:user.email
                         }
                     });
+                    this.user = user;
                     Wiki.create({
                         title: "Wikis 101",
                         body: "Learning to create wikis",
