@@ -21,7 +21,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: "standard"
     }
-  }, {});
+    
+  }, {
+    timeStamps: true
+  });
   User.associate = function(models) {
     // associations can be defined here
     User.hasMany(models.Wiki, {
