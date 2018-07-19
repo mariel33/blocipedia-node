@@ -1,8 +1,11 @@
 const userQueries = require("../db/queries.users.js");
 const passport = require("passport");
+const User = require("../db/models").User;
+const publishableKey = process.env.PUBLISHABLE_KEY;
+const secretKey = process.env.SECRET_KEY;
 
 module.exports = {
-    signUp(req, res, next){
+    signUp(req, res, next) {
         res.render("users/signup");
     },
 
@@ -15,11 +18,11 @@ module.exports = {
         };
 
         userQueries.createUser(newUser, (err, user) => {
-            if(err){
+            if (err) {
                 req.flash("error", err);
                 res.redirect("/users/signup");
             } else {
-                passport.authenticate("local")(req,res, () => {
+                passport.authenticate("local")(req, res, () => {
                     req.flash("notice", "You've successfully signed up!");
                     res.redirect("/");
                 })
@@ -31,9 +34,9 @@ module.exports = {
         res.render("users/signin");
     },
 
-    signIn(req, res, next){
+    signIn(req, res, next) {
         passport.authenticate("local")(req, res, function () {
-            if(!req.user){
+            if (!req.user) {
                 req.flash("notice", "Sign in failed. Please try again.")
                 res.redirect("/users/signin");
             } else {
@@ -47,5 +50,48 @@ module.exports = {
         req.logout();
         req.flash("notice", "You've successfully signed out!");
         res.redirect("/");
+    },
+
+    edit(req, res, next){
+        User.findById(req.user.id)
+            .then((user) => {
+                res.render("users/edit", {user})
+            })
+    },
+
+    upgrade(req, res, next) {
+        User.findById(req.user.id)
+            .then((user) => {
+                const stripe = require("stripe")(publishableKey);
+                const token = req.body.stripeToken; // Using Express
+                const charge = stripe.charges.create({
+                    amount: 1500,
+                    currency: 'usd',
+                    description: 'Upgrade to Premium Account',
+                    source: token,
+                }, (err, charge) => {
+                    user.updateAttributes({role: "premium"});
+                    req.flash("notice", "You are now upgraded to premium");
+                    res.redirect("/");
+                });
+
+            })
+            .catch((err) => {
+                console.log(err);
+                done();
+            })
+    },
+
+    downgrade(req, res, next) {
+        User.findById(req.user.id)
+            .then((user) => {
+                user.updateAttributes({role: "standard"});
+                req.flash("notice", "You are now a standard user");
+                res.redirect("/");
+            })
+            .catch((err) => {
+                console.log(err);
+                done();
+            })
     }
 }
