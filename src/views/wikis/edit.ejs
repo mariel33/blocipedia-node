@@ -20,16 +20,18 @@
         <div class="form-group">
           <label for="body">Body</label>
 <!-- #3 -->
-          <textarea rows="4" class="form-control" name="description" placeholder="Enter Body"><%= wiki.body %></textarea>
+          <textarea rows="4" class="form-control" name="body" placeholder="Enter Body"><%= wiki.body %></textarea>
         </div>
         <div class = "form-group">
             <label for ="private">Is this a private wiki?</label>
-            <select>
+            <select name = "private">
                 <option value ="true">Private</option>
                 <option value ="false">Public</option>
             </select>
+            <% if(wiki.private === true) { %>
+            <p style="font-style:italic; font-weight: bold">Changing wikis to Public will allow other users to view and edit.</p>
+          <% } %>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
         <button type="submit" class="btn btn-primary">Update</button>
       </form>
     </main>

@@ -7,6 +7,7 @@
     <% include ../static/partials/navbar.ejs %>
 
     <main class="container">
+        <% include ../static/partials/messages.ejs %>
 
       <h1>New Wiki</h1>
 
@@ -26,7 +27,9 @@
                 <option value = "true">Private</option>
                 <option value = "false">Public</option>
             </select>
-            <a href= "/users/edit">Upgrade Account</a>
+            <% if(currentUser.role === "standard") { %>
+            <a href= "/users/edit">You must have a premium account to create Private Wikis. Click here to upgrade account.</a>
+            <% } %>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>

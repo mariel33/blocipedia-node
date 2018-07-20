@@ -38,6 +38,7 @@
                         <form action="/users/<%=user.id%>/downgrade" method="POST">
                             <button type="submit" class ="btn btn-danger">Change to standard account</button>
                         </form>
+                        <p style = "font-style: italic; font-weight: bold">Changing to a standard account will make all private wikis public for other users to view and edit.</p>
                         <% } %>
         </main>
         <% include ../static/partials/baseScripts.ejs %>

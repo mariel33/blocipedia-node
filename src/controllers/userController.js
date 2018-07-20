@@ -1,6 +1,7 @@
 const userQueries = require("../db/queries.users.js");
 const passport = require("passport");
 const User = require("../db/models").User;
+const wikiQueries = require("../db/queries.wikis.js");
 const publishableKey = process.env.PUBLISHABLE_KEY;
 const secretKey = process.env.SECRET_KEY;
 
@@ -83,6 +84,7 @@ module.exports = {
     },
 
     downgrade(req, res, next) {
+        wikiQueries.userPublic(req.user.dataValues.id);
         User.findById(req.user.id)
             .then((user) => {
                 user.updateAttributes({role: "standard"});
