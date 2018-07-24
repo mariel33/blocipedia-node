@@ -28,7 +28,7 @@ module.exports = {
                 .then((collaborators) => {
                 result["collaborators"] = collaborators;
                 //console.log(result);
-                callback(null, result);
+                callback(null, wiki);
                 })
                 .catch((err) => {
                     callback(err);
