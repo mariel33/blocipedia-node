@@ -38,13 +38,23 @@ module.exports = class ApplicationPolicy {
 
     // #4
     edit() {
+        if (this.record.private == false) {
         return this.new() &&
-            this.record && (this._isOwner() || this._isAdmin());
+          this.record && (this._isStandard() || this._isPremium() || this._isAdmin());
+        } else if (this.record.private == true) {
+          return this.new() &&
+            this.record && (this._isPremium()  || this._isAdmin() || this._isStandard());
+        }
+      }
+
+    showCollaborators(){
+        return this.edit();
     }
 
     update() {
         return this.edit();
     }
+
 
     // #5
     destroy() {

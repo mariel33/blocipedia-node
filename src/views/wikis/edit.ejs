@@ -1,42 +1,53 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <% include ../static/partials/head.ejs %>
-  </head>
-  <body>
-    <% include ../static/partials/navbar.ejs %>
+
+<head>
+  <% include ../static/partials/head.ejs %>
+</head>
+
+<body>
+  <% include ../static/partials/navbar.ejs %>
 
     <main class="container">
+        <% include ../static/partials/messages.ejs %>
 
       <h1>Edit Wiki</h1>
 
-<!-- #1 -->
+      <!-- #1 -->
       <form action="/wikis/<%= wiki.id %>/update" method="post">
         <div class="form-group">
           <label for="title">Wiki title</label>
-<!-- #2 -->
+          <!-- #2 -->
           <input value="<%= wiki.title %>" type="text" class="form-control" name="title" aria-describedby="titleHelp" placeholder="Enter Title">
         </div>
         <div class="form-group">
           <label for="body">Body</label>
-<!-- #3 -->
+          <!-- #3 -->
           <textarea rows="4" class="form-control" name="body" placeholder="Enter Body"><%= wiki.body %></textarea>
         </div>
-        <div class = "form-group">
-            <label for ="private">Is this a private wiki?</label>
-            <select name = "private">
-                <option value ="true">Private</option>
-                <option value ="false">Public</option>
-            </select>
-            <% if(wiki.private === true) { %>
+        <div class="form-group">
+          <label for="private">Is this a private wiki?</label>
+          <select name="private">
+            <option value="true">Private</option>
+            <option value="false">Public</option>
+          </select>
+          <% if(wiki.private === true) { %>
             <p style="font-style:italic; font-weight: bold">Changing wikis to Public will allow other users to view and edit.</p>
-          <% } %>
+            <% } %>
+        </div>
+        <div class="form-group">
+          <label for="collaborators">Wiki Collaborators</label>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
+        <% if(currentUser && (currentUser.id == wiki.userId || currentUser && currentUser.role == "admin") && wiki.private === true) { %>
+          <a href="/wikis/<%= wiki.id %>/collaborators" class="btn btn-info">Edit Collaborators</a>
+        <% } %>
+        </form>
       </form>
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>
 
-  </body>
+</body>
+
 </html>

@@ -26,6 +26,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "userId",
       onDelete: "CASCADE"
     });
+
+    Wiki.hasMany(models.Collaborators, {
+      foreignKey: "wikiId",
+      as: "collaborators"
+    });
   };
   return Wiki;
 };
