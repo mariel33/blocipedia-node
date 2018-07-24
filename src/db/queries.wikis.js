@@ -19,10 +19,11 @@ module.exports = {
         let result = {};
         Wiki.findById(id)
         .then((wiki) => {
+            console.log(wiki)
             if(!wiki) {
                 callback(404);
             } else {
-                result["wiki"] = wiki;
+                //result["wiki"] = wiki;
                 Collaborators.scope({method: ["allCollaboratorsFor", id]}).all()
 
                 .then((collaborators) => {
