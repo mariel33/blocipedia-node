@@ -1,5 +1,6 @@
 const User = require("./models").User;
 const bcrypt = require("bcryptjs");
+const Collaborators = require("./models").Collaborators;
 
 
 module.exports = {
@@ -27,6 +28,26 @@ module.exports = {
         })
         .catch((err) => {
             callback(err);
+        })
+    },
+
+    getUser(id, callback){
+        let result = {};
+        User.findById(id)
+        .then((user) => {
+            if(!user) {
+                callback(404)
+            } else {
+                result["user"] = user;
+                Collaborators.scope({ method: ["allCollaborationsFor", id]}).all()
+                .then((collaborations) => {
+                    result["collaborations"] = collaborations;
+                    callback(null, result)
+                })
+                .catch((err) => {
+                    callback(err);
+                })
+            }
         })
     }
 }

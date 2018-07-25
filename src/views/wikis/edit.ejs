@@ -35,9 +35,6 @@
             <p style="font-style:italic; font-weight: bold">Changing wikis to Public will allow other users to view and edit.</p>
             <% } %>
         </div>
-        <div class="form-group">
-          <label for="collaborators">Wiki Collaborators</label>
-        </div>
         <button type="submit" class="btn btn-primary">Update</button>
         <% if(currentUser && (currentUser.id == wiki.userId || currentUser && currentUser.role == "admin") && wiki.private === true) { %>
           <a href="/wikis/<%= wiki.id %>/collaborators" class="btn btn-info">Edit Collaborators</a>

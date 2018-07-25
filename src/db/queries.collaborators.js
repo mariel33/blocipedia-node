@@ -31,7 +31,7 @@ module.exports = {
                 };
                 return Collaborators.create(newCollaborator)
                 .then((collaborators) => {
-                    callback(null, collaborator);
+                    callback(null, collaborators);
                 })
                 .catch((err) => {
                     callback(err, null);
@@ -47,11 +47,11 @@ module.exports = {
     },
 
     delete(req, callback) {
-        let collaboratorId = req.body.collaborator;
+        let collaboratorId = req.body.collaborators;
         let wikiId = req.params.wikiId;
         const authorized = new Authorizer(req.user, wiki, collaboratorId).destroy();
         if(authorized){
-            Collaborator.destroy({ where: {
+            Collaborators.destroy({ where: {
                 userId: collaboratorId,
                 wikiId: wikiId
             }})

@@ -56,15 +56,17 @@ module.exports = {
         }
     },
 
-    show(req, res, next) {
-        wikiQueries.getWiki(req.params.id, (err, wiki) => {
-            if (err || wiki == null) {
-                res.redirect(404, "/");
-            } else {
-                res.render("wikis/show", { wiki })
-            }
-        })
-    },
+    show(req, res, next){
+        wikiQueries.getWiki(req.params.id, (err, result) => {
+          wiki = result["wiki"];
+          if(err || wiki == null){
+            console.log(collaborators);
+            res.redirect(404, "/");
+          } else {
+            res.render("wikis/show", {wiki});
+          }
+        });
+      },
 
     destroy(req, res, next) {
         wikiQueries.deleteWiki(req.params.id, (err, wiki) => {
@@ -77,15 +79,14 @@ module.exports = {
     },
 
     edit(req, res, next) {
-        wikiQueries.getWiki(req.params.id, (err, wiki) => {
-            if (err || wiki == null) {
-                console.log(err);
+        wikiQueries.getWiki(req.params.id, (err, result) => {
+            if (err || result == null) {
                 res.redirect(404, "/");
             } else {
                 const authorized = new Authorizer(req.user, wiki).edit();
                 if(authorized){
-                    wiki.body = markdown.toHTML(wiki.body);
-                    res.render("wikis/edit", { wiki });
+                    result.wiki.body = markdown.toHTML(wiki.body);
+                    res.render("wikis/edit", {...result});
                 } else {
                     console.log("else");
                     req.flash("You are not authorized to do that")

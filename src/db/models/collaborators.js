@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   Collaborators.associate = function(models) {
     // associations can be defined here
     Collaborators.belongsTo(models.Wiki, {
-      foreignKey: "userId",
+      foreignKey: "wikiId",
       onDelete: "CASCADE",
     });
     Collaborators.belongsTo(models.User, {
@@ -40,5 +40,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
  };
-  return Collaborators
+  return Collaborators;
 };
