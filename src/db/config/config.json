@@ -18,9 +18,10 @@
     "operatorAliases": false
   },
   "production": {
-    "username": "postgres",
+    "username": "root",
     "password": null,
-    "db": "process.env.DATABASE_URL",
-    "dialect": "postgres"
+    "database": "database_production",
+    "dialect": "postgres",
+    "use_env_variable": "DATABASE_URL"
   }
 }
